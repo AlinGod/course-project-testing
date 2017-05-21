@@ -2,3 +2,4 @@ language: java
 java:
       -"1.8.0"
 script: jemmy test/ButtonsTest.java
+os: windows

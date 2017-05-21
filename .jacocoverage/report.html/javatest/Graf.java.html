@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Graf.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;JavaTest&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">javatest</a> &gt; <span class="el_source">Graf.java</span></div><h1>Graf.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package javatest;
+import java.util.*;
+
+public class Graf {
+
+List[]  mas ;/* вершины */
+int[][] matrix;
+<span class="fc" id="L13">int num_el = 0;</span>
+
+Graf(int i)
+<span class="fc" id="L16">{</span>
+<span class="fc" id="L17">    mas = new  List[i];</span>
+<span class="fc bfc" id="L18" title="All 2 branches covered.">    for(int c = 0; c &lt; i; c++)</span>
+<span class="fc" id="L19">        mas[c] = null;</span>
+<span class="fc" id="L20">    matrix = new int[i][i];</span>
+<span class="fc bfc" id="L21" title="All 2 branches covered.">    for(int a = 0; a &lt; i; a++)</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        for(int b = 0; b &lt; i; b++)</span>
+<span class="fc" id="L23">            matrix[a][b] = 0;</span>
+<span class="fc" id="L24">}</span>
+
+public int add_mas(List A)// добавление в граф нового листа
+{
+<span class="fc bfc" id="L28" title="All 2 branches covered.">    if(A != null){</span>
+<span class="fc" id="L29">    A.num = num_el++;</span>
+<span class="fc" id="L30">    mas[A.num] = A;</span>
+<span class="fc" id="L31">    return 0;</span>
+    }
+<span class="fc" id="L33">    return 1;</span>
+}
+public int add_matrix( List A, List B)//добавление зависимостей листов
+{
+<span class="pc bpc" id="L37" title="1 of 4 branches missed.">    if(A != null &amp;&amp; B != null){</span>
+<span class="pc bpc" id="L38" title="2 of 4 branches missed.">        if(A.num != -1 &amp;&amp; B.num != -1){</span>
+<span class="fc" id="L39">            matrix[A.num][B.num] = 1;</span>
+<span class="fc" id="L40">            matrix[B.num][A.num] = 1;</span>
+<span class="fc" id="L41">            return 0;</span>
+        }
+        else 
+<span class="nc" id="L44">            return 1;</span>
+
+    }
+<span class="fc" id="L47">    return 1;</span>
+}
+
+public List search(javatest.List Head, int c)// поиск листа по значению
+{
+<span class="fc bfc" id="L52" title="All 2 branches covered.">   if(Head == null)</span>
+<span class="fc" id="L53">       return null;</span>
+   else
+   {
+<span class="fc" id="L56">       QGR Que = new QGR(mas.length);</span>
+<span class="fc" id="L57">       Que.ins(Head);</span>
+<span class="fc" id="L58">       int i = Head.num;</span>
+<span class="fc" id="L59">       javatest.List cur = Que.getFront();</span>
+<span class="fc" id="L60">       mas[i].flag = true;</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">        while(Que.size() != 0){ </span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">                if(cur.n != c){</span>
+  
+<span class="fc" id="L64">                    int x = cur.num;</span>
+<span class="fc" id="L65">                    int y = 0;</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">                    while(y != num_el)</span>
+                    {
+<span class="fc bfc" id="L68" title="All 4 branches covered.">                        if(matrix[x][y] == 1 &amp;&amp; mas[y].flag != true)</span>
+                        {
+<span class="fc" id="L70">                            mas[y].prev = cur;</span>
+<span class="fc" id="L71">                            mas[y].flag = true;</span>
+<span class="fc" id="L72">                            Que.ins(mas[y]);</span>
+                            
+                        }
+<span class="fc" id="L75">                        y++;</span>
+                    }
+                }
+                else
+                    break;
+<span class="fc" id="L80">             Que.remove();</span>
+<span class="fc" id="L81">            cur = Que.getFront();</span>
+       }
+<span class="fc" id="L83">        return cur;</span>
+   }
+    
+//    QGR Que = new QGR(mas.length);
+//    javatest.List cur = Head;// добавление в очередь 
+//    if (Head != null){
+//        Head.flag = true;
+//        Que.ins(Head);
+//        while(Que.size() != 0 &amp;&amp; cur.n != c)// пока очередь не 0 и пока не найдено число
+//        {
+//            int x = cur.num;// количество вершин
+//            int y = num_el - 1 ;
+//            cur.flag = true;
+//            while( x != y )
+//            {
+//                if(matrix[x][y] == 1 &amp;&amp; mas[y].flag != true)
+//                {
+//                    mas[y].prev = cur; 
+//                    Que.ins(cur);
+//                    cur.flag = true;
+//                }
+//                y--;
+//            }
+//            Que.remove();
+//            cur = Que.getFront();
+//        }
+//    }
+// return cur;
+}
+
+public void Nul_flag()//обнуление флагов
+{
+<span class="fc" id="L115">    int i = 0;</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">    while(i != num_el)</span>
+<span class="fc" id="L117">        mas[i++].flag = false;</span>
+<span class="fc" id="L118">}</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

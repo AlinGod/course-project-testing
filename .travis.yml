@@ -1,6 +1,9 @@
 language: java
-jdk: oraclejdk8
+jdk:
+  - oraclejdk8
+  - oraclejdk7
+  - openjdk6
 java:
       -"1.8.0"
 
-os: windows
+os: windows10

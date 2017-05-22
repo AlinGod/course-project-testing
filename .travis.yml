@@ -1,4 +1,4 @@
-test/javatest/language: java
+language: java
 jdk:
   - oraclejdk8
   - oraclejdk7
@@ -6,4 +6,4 @@ jdk:
 java:
       -"1.8.0"
       -"1.7.0_76"
-script: ant test
+script: ant test/javatest

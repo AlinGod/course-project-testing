@@ -6,4 +6,4 @@ jdk:
 java:
       -"1.8.0"
       -"1.7.0_76"
-script: -lib/jemmy.jar test/ButtonsTest.java
+script: mvn test/javatest/GrafTest.java

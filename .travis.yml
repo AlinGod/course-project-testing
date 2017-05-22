@@ -5,5 +5,4 @@ jdk:
   - openjdk6
 java:
       -"1.8.0"
-script: ant test/javatest/GrafTest.java
-os: windows10
+script: -ant test/javatest/GrafTest.java
